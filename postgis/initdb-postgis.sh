@@ -1,43 +1,47 @@
-#!/bin/sh
+!/bin/sh
 
-set -e
+#------ Create all databases one by one
+psql --user="postgres" --host="localhost" <<- 'EOSQL'
+CREATE DATABASE london;
+CREATE DATABASE bristol;
+CREATE DATABASE newyork;
+CREATE DATABASE pittsburgh;
+EOSQL
 
-# ------ Create all databases one by one
-# Bristol
-# Create the 'template_postgis' template db
-psql --dbname="$DB" --user="postgres" <<- 'EOSQL'
-CREATE DATABASE bristol ENCODING 'UTF-8' LC_COLLATE 'en_GB.utf8' LC_CTYPE 'en_GB.utf8' TEMPLATE template0;
+# Create extension in databases -------------------------------------------
+
+# London
+psql --dbname="london" --user="postgres" <<- 'EOSQL'
 CREATE EXTENSION postgis;
 CREATE EXTENSION hstore;
 EOSQL
 
+# Bristol
+psql --dbname="bristol" --user="postgres" <<- 'EOSQL'
+CREATE EXTENSION postgis;
+CREATE EXTENSION hstore;
+EOSQL
 
-# # Create databases
-# for DB in bristol, london, newyork, pittsburgh; do 
-# 	# Create the 'template_postgis' template db
-# 	psql --dbname="$DB" --user="postgres" <<- 'EOSQL'
-#     CREATE DATABASE bristol ENCODING 'UTF-8' LC_COLLATE 'en_GB.utf8' LC_CTYPE 'en_GB.utf8' TEMPLATE template0;
-# 	UPDATE pg_database SET datistemplate = TRUE WHERE datname = 'template_postgis';
-# 	EOSQL
-# done
+# New York
+psql --dbname="newyork" --user="postgres" <<- 'EOSQL'
+CREATE EXTENSION postgis;
+CREATE EXTENSION hstore;
+EOSQL
 
-# # Create extensions
-# for DB in bristol, london, newyork, pittsburgh; do 
-# 	echo "Loading PostGIS extensions into $DB"
-# 	psql --dbname="$DB" <<-'EOSQL'
-# 		CREATE EXTENSION postgis;
-# 		CREATE EXTENSION hstore;
-# EOSQL
-# done
+# Pittsburgh
+psql --dbname="pittsburgh" --user="postgres" <<- 'EOSQL'
+CREATE EXTENSION postgis;
+CREATE EXTENSION hstore;
+EOSQL
 
-# echo "Loading osm to databases"
-# cd openstreetmap-carto
-# osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d Bristol -H localhost -U postgres /Bristol.osm.pbf
-# osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d Bristol -H localhost -U postgres /London.osm.pbf
-# osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d Bristol -H localhost -U postgres /NewYork.osm.pbf
-# osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d Bristol -H localhost -U postgres /pittsburgh.osm.pbf
+echo "Loading osm to databases"
+cd openstreetmap-carto
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d bristol -H localhost -U postgres /Bristol.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d london -H localhost -U postgres /London.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d newyork -H localhost -U postgres /NewYork.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d pittsburgh -H localhost -U postgres /pittsburgh.osm.pbf
 
-# echo "Finished"
-# echo "DB successfully created, waiting for restart"
-# sleep 60
-# echo "Ready"
+echo "Finished"
+echo "DB successfully created, waiting for restart"
+sleep 60
+echo "Ready"

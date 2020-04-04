@@ -1,4 +1,4 @@
-FROM geographica/postgis:dev_diplodocus
+FROM mdillon/postgis:11
 
 WORKDIR /
 
@@ -14,6 +14,5 @@ RUN git clone https://github.com/dooman87/openstreetmap-carto.git && \
     wget https://download.bbbike.org/osm/bbbike/London/London.osm.pbf
 
 COPY ./pittsburgh.osm /pittsburgh.osm
-COPY ./initdb-postgis.sh /entrypoint.sh 
-RUN chmod 755 /entrypoint.sh
-#ENTRYPOINT /entrypoint.sh
+COPY ./initdb-postgis.sh /load_osm_data.sh
+#RUN chmod 755 /load_data_osm.sh
