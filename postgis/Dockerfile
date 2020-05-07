@@ -8,7 +8,7 @@ RUN apt-get install -y osm2pgsql osmctools git wget
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/dooman87/openstreetmap-carto.git && \
+RUN git clone https://github.com/gravitystorm/openstreetmap-carto.git && \
     wget https://download.bbbike.org/osm/bbbike/Bristol/Bristol.osm.pbf && \
     wget https://download.bbbike.org/osm/bbbike/NewYork/NewYork.osm.pbf && \
     wget https://download.bbbike.org/osm/bbbike/London/London.osm.pbf

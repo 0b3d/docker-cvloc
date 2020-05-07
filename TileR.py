@@ -20,10 +20,8 @@ class TileR():
             height = size[1]
         else: 
             width, height = size, size
-
-        #mapfile = os.path.join( os.environ['carto'], 'no_text_style_{}.xml'.format(self.city) )
-        mapfile = os.path.join( os.environ['carto'], 'style_s2v.xml'.format(self.city) )
-
+        
+        mapfile = os.path.join( os.environ['carto'], 'style_s2v_notxt_bheight_{}.xml'.format(self.city) )
 
         # target projection
         projection = '+proj=aeqd +ellps=WGS84 +lat_0={} +lon_0={}'.format(90, -tetha + self.lon)
@@ -71,9 +69,12 @@ class TileR():
  
 
 if __name__ == "__main__":
-    tile = TileR(40.7756382, -73.9584018, 'newyork') 
-    img = tile.renderTile(zoom=18, tetha=0, size=224)
-    cv2.imshow("tile", img)
+    tile = TileR(40.7091439, -74.0105210, 'newyork') 
+    img1 = tile.renderTile(zoom=18, tetha=0, size=128)
+    img2 = tile.renderTile(zoom=18, tetha=0, size=256)
+    cv2.imshow("tile1", img1)
+    cv2.imshow("tile2", img2)
+
     cv2.waitKey(0)
 
 

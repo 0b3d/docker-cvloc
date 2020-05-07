@@ -16,7 +16,7 @@ CREATE EXTENSION postgis;
 CREATE EXTENSION hstore;
 EOSQL
 
-Bristol
+# Bristol
 psql --dbname="bristol" --user="postgres" <<- 'EOSQL'
 CREATE EXTENSION postgis;
 CREATE EXTENSION hstore;
@@ -36,10 +36,10 @@ EOSQL
 
 # echo "Loading osm to databases"
 cd openstreetmap-carto
-osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d bristol -H localhost -U postgres /Bristol.osm.pbf
-osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d london -H localhost -U postgres /London.osm.pbf
-osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d newyork -H localhost -U postgres /NewYork.osm.pbf
-osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style -d pittsburgh -H localhost -U postgres /pittsburgh.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d bristol -H localhost -U postgres /Bristol.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d london -H localhost -U postgres /London.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d newyork -H localhost -U postgres /NewYork.osm.pbf
+osm2pgsql -s -C 300 -c -G --hstore --style openstreetmap-carto.style --tag-transform-script openstreetmap-carto.lua -d pittsburgh -H localhost -U postgres /pittsburgh.osm
 
 cd /
 echo "Finished"

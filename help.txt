@@ -1,0 +1,42 @@
+### CREATE FUNCTION TO GET BUILDING HEIGTHS
+
+CREATE OR REPLACE FUNCTION height_to_float(varchar)
+    RETURNS float AS
+    $func$
+    BEGIN
+        IF $1 IS NOT NULL THEN
+            RETURN $1::float;
+        ELSE
+            RETURN 8.0;
+        END IF;
+
+    EXCEPTION 
+    WHEN OTHERS THEN
+        RETURN 8.0;
+
+    END;
+
+    $func$ LANGUAGE plpgsql IMMUTABLE;
+
+
+(SELECT
+    way,
+    building,
+    amenity,
+    aeroway,
+    aerialway,
+    tags->'public_transport' as public_transport,  
+    height_to_float(tags->'height') as height
+    FROM planet_osm_polygon
+    WHERE building IS NOT NULL
+    AND building != 'no'
+    AND way_area > 1*!pixel_width!::real*!pixel_height!::real
+    ORDER BY COALESCE(layer,0), way_area DESC
+) AS buildings
+
+# Convert style with carto
+carto -a "3.0.20" project_street2vec.mml > style_s2v.xml
+
+
+# To connect to postgres container from tilemill
+docker-cvloc://host=postgis  user=postgres port=5432 dbname=newyork 
