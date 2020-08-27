@@ -10,6 +10,8 @@ The script will create 4 schemes with OSM data for the following cities:
     bristol
     london
 
+It uses OpenstreetMap's gravitystorm v5.1.0 style
+
 INSTRUCTIONS
 
 1. Install docker and docker-compose
@@ -61,25 +63,22 @@ To render maptiles once that mapnik and mapnik-python bindings have been install
 
 1. Clone OpenStreetMap's gravitystorm style.
 
-    git clone https://github.com/gravitystorm/openstreetmap-carto.git
+    git clone --depth 1 --branch v5.1.0 https://github.com/gravitystorm/openstreetmap-carto.git
 
-2. Copy project_street2vec.mml file to the directory of gravity storm created in step 1.
-   cp ~/dev/CVLoc/docker-cvloc/utils/project_street2vec.mml ~/src/openstreetmap-carto/
-
-3. Edit the project_street2vec.mml file from the gravitystorm directory to match the connecting settings of the postgres database. Important parameters are:
-- host: 'localhost'
-- user: 'postgres'
+2. Edit the project.mml file from the gravitystorm directory to match the connecting settings of the postgres database. Important parameters are after line 32. They should look like:
+- host: "localhost"
+- user: "postgres"
+- password: "postgres"
 - dbname: "newyork"     # Adjust to the name of your database.
 
     **Note** If a custumized style is required modify the .mml file and its style classes defined in styles/*.mss files. Here it could be posible to remove text and numbering to map tiles but we did it modifying directly the xml file (see step 5).
 
 
-4. Convert the style project_street2vec.mml file to xml using carto. The xml file should be stored in the gravitystorm directory created in the first step.
+3. Convert the style project_street2vec.mml file to xml using carto. The xml file should be stored in the gravitystorm directory created in the first step.
 
-    carto -a "3.0.20" project_street2vec.mml > style.xml
+    carto -a "3.0.20" project.mml > style.xml
 
-5. To remove all text and numbering from map tiles use the "removeTextXML" function defined in the script utils/carto.py. 
+4. To remove all text and numbering from map tiles use the "removeTextXML" function defined in the script utils/carto.py. 
 
-
-6. Go to the utils/render_tiles.py script and define city (database), save directory, zoom levels and xml style file and run the script.
+5. Go to the utils/render_tiles.py script and define city (database), save directory, zoom levels and xml style file and run the script.
 

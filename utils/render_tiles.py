@@ -3,7 +3,6 @@ import csv, random as rd
 import multiprocessing
 from subprocess import call
 import pandas as pd
-import cv2
 import mapnik
 
 def renderandSave(m, output, metadata, zoom=19, size=224):
@@ -117,8 +116,8 @@ def render_locations(locations, num_threads, save_dir):
 
 # Define dataset to render and saving directory
 city = 'newyork' # This is the name of the postgres database name, in our case pittsburgh and newyork
-save_dir = os.path.join( os.environ['datasets'], 'streetlearn', 'tiles_height_manhattan_2019')
-
+#save_dir = os.path.join( os.environ['datasets'], 'streetlearn', 'tiles_height_manhattan_2019')
+save_dir = "temp/"
 csv_filename = os.path.join( os.environ['datasets'], 'streetlearn', 'jpegs_manhattan_2019', 'nodes.txt') # File with node metadata
 frame = pd.read_csv(csv_filename, names=["pano_id","yaw","lat","lon"])
 n = len(frame)
@@ -128,7 +127,7 @@ print("Nodes to process in {} dataset: {}".format( csv_filename, n))
 num_threads = 4
 width = 256
 height = 256
-zoom_levels = [18,19]
+zoom_levels = [18]
 
 # Create directories
 for zoom in zoom_levels:
@@ -138,7 +137,8 @@ for zoom in zoom_levels:
         os.makedirs(directory)
 
 # Mapfile stylesheet. Parse it only once 
-mapfile = os.path.join( os.environ['carto'], 'style_s2v_notxt_bheight_{}.xml'.format(city) )
+# mapfile = os.path.join( os.environ['carto'], 'style_s2v_notxt_bheight_{}.xml'.format(city) )
+mapfile = os.path.join('/home/os17592/src/openstreetmap-carto/style.xml')
 m = mapnik.Map(width, height) 
 mapnik.load_map(m, mapfile)
 
