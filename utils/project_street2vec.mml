@@ -48,7 +48,7 @@ Stylesheet:
   - style/roads.mss
   - style/power.mss
   - style/placenames.mss
-  - style/buildings_streettovec.mss
+  - style/buildings.mss
   - style/stations.mss
   - style/amenity-points.mss
   - style/ferry-routes.mss
