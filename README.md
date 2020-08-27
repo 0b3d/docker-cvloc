@@ -22,6 +22,17 @@ INSTRUCTIONS
    bash load_osm_data.sh
 7. Test the container (by using getMVT.py for example, and visualizing the result in qgis) 
 
+To check the databases do the following inside the container
+
+1. su postgres      This will change user to postgres 
+2. psql             Use psql language
+3. \l               Shows all the databases
+4. \c newyork       Connect to NY's database
+5. \d               Shows tables in the database
+6. select name from planet_osm_roads where name='Wall Street';    Do an example query
+7. \q               quit database
+8. exit             Exit container
+
 Enjoy
 
 #### Mapnik installation 
@@ -39,7 +50,8 @@ Install mapnik and dependencies. A very good tutorial to follow is
 #### Tested with
 - Ubuntu 18.04
 - Mapnik 3.0.22 (check with mapnik-config -v)
-- Carto (check with carto 0.18.2)
+- Ensure python bindings are installed by trying to import mapnik
+- Carto (check with carto -v)
 - 0.18.2
 
 
@@ -49,9 +61,10 @@ To render maptiles once that mapnik and mapnik-python bindings have been install
 
 1. Clone OpenStreetMap's gravitystorm style.
 
-    git clone https://github.com/gravitystorm/openstreetmap-carto.git 
+    git clone https://github.com/gravitystorm/openstreetmap-carto.git
 
 2. Copy project_street2vec.mml file to the directory of gravity storm created in step 1.
+   cp ~/dev/CVLoc/docker-cvloc/utils/project_street2vec.mml ~/src/openstreetmap-carto/
 
 3. Edit the project_street2vec.mml file from the gravitystorm directory to match the connecting settings of the postgres database. Important parameters are:
 - host: 'localhost'
