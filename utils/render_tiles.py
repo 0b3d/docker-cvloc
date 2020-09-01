@@ -103,7 +103,7 @@ def render_locations(locations, num_threads, save_dir):
             tile_url = os.path.join(save_dir, 'z' + str(zoom), row['pano_id'] + '.png')
             t = (i, row, zoom, tile_url)
             queue.put(t)
-
+ 
     # Signal render threads to exit by sending empty request to queue
     for i in range(num_threads):
         queue.put(None)
@@ -116,9 +116,10 @@ def render_locations(locations, num_threads, save_dir):
 
 # Define dataset to render and saving directory
 city = 'newyork' # This is the name of the postgres database name, in our case pittsburgh and newyork
-#save_dir = os.path.join( os.environ['datasets'], 'streetlearn', 'tiles_height_manhattan_2019')
-save_dir = "temp/"
-csv_filename = os.path.join( os.environ['datasets'], 'streetlearn', 'jpegs_manhattan_2019', 'nodes.txt') # File with node metadata
+# save_dir = os.path.join( os.environ['datasets'], 'streetlearn', 'tiles_height_manhattan_2019')
+save_dir = "temp_angle/"
+# csv_filename = os.path.join( os.environ['datasets'], 'streetlearn', 'jpegs_manhattan_2019', 'nodes.txt') # File with node metadata
+csv_filename = 'angle.txt' # File with node metadata
 frame = pd.read_csv(csv_filename, names=["pano_id","yaw","lat","lon"])
 n = len(frame)
 print("Nodes to process in {} dataset: {}".format( csv_filename, n))
