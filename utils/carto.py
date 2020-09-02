@@ -4,8 +4,9 @@ def removeTextXML(mapfile, new_mapfile_name):
 # This function removes all text labels and shields in the stylesheet.
     text = 'TextSymbolizer'
     shields = 'ShieldSymbolizer'
-    #text = 'Parameter'
-    newPath = os.path.join( os.environ['carto'], new_mapfile_name)
+    # text = 'Parameter'
+    # newPath = os.path.join( os.environ['carto'], new_mapfile_name)
+    newPath = os.path.join('/home/os17592/src/openstreetmap-carto', new_mapfile_name)
     newFile = open( newPath, "w")
     count = 0
     with open( mapfile , 'r') as f:
@@ -38,6 +39,7 @@ def addLines(mapfile):
        
     
 if __name__ == "__main__":
-    mapfile = os.path.join( os.environ['carto'], 'style_s2v.xml')
-    removeTextXML(mapfile, new_mapfile_name='style_s2v_notxt_bheight_newyork.xml')
+    # mapfile = os.path.join( os.environ['carto'], 'style_s2v.xml')
+    mapfile = os.path.join('/home/os17592/src/openstreetmap-carto/style.xml')
+    removeTextXML(mapfile, new_mapfile_name='style_notxt.xml')
     #addLines(mapfile)

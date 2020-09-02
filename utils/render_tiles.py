@@ -128,7 +128,7 @@ print("Nodes to process in {} dataset: {}".format( csv_filename, n))
 num_threads = 4
 width = 256
 height = 256
-zoom_levels = [18]
+zoom_levels = [18,19]
 
 # Create directories
 for zoom in zoom_levels:
@@ -139,7 +139,7 @@ for zoom in zoom_levels:
 
 # Mapfile stylesheet. Parse it only once 
 # mapfile = os.path.join( os.environ['carto'], 'style_s2v_notxt_bheight_{}.xml'.format(city) )
-mapfile = os.path.join('/home/os17592/src/openstreetmap-carto/style.xml')
+mapfile = os.path.join('/home/os17592/src/openstreetmap-carto/style_notxt.xml')
 m = mapnik.Map(width, height) 
 mapnik.load_map(m, mapfile)
 
