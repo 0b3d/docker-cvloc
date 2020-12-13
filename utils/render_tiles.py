@@ -128,7 +128,7 @@ print("Nodes to process in {} dataset: {}".format( csv_filename, n))
 num_threads = 4
 width = 256
 height = 256
-zoom_levels = [19]
+zoom_levels = [18]
 
 # Create directories
 for zoom in zoom_levels:
