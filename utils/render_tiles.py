@@ -115,11 +115,11 @@ def render_locations(locations, num_threads, save_dir):
 
 
 # Define dataset to render and saving directory
-city = 'newyork' # This is the name of the postgres database name, in our case pittsburgh and newyork
+city = 'oxford' # This is the name of the postgres database name, in our case pittsburgh and newyork
 # save_dir = os.path.join( os.environ['datasets'], 'streetlearn', 'tiles_height_manhattan_2019')
-save_dir = "hudsonriver5k1/"
+save_dir = "oxford1/"
 # csv_filename = os.path.join( os.environ['datasets'], 'streetlearn', 'jpegs_manhattan_2019', 'nodes.txt') # File with node metadata
-csv_filename = 'temp/hudsonriver5k1.txt' # File with node metadata
+csv_filename = 'temp/oxford1.txt' # File with node metadata
 frame = pd.read_csv(csv_filename, names=["pano_id","yaw","lat","lon"])
 n = len(frame)
 print("Nodes to process in {} dataset: {}".format( csv_filename, n))
@@ -128,7 +128,7 @@ print("Nodes to process in {} dataset: {}".format( csv_filename, n))
 num_threads = 4
 width = 256
 height = 256
-zoom_levels = [19]
+zoom_levels = [18]
 
 # Create directories
 for zoom in zoom_levels:
