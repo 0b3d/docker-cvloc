@@ -115,11 +115,11 @@ def render_locations(locations, num_threads, save_dir):
 
 
 # Define dataset to render and saving directory
-city = 'bristol' # This is the name of the postgres database name, in our case pittsburgh and newyork
+city = 'oxford' # This is the name of the postgres database name, in our case pittsburgh and newyork
 # save_dir = os.path.join( os.environ['datasets'], 'streetlearn', 'tiles_height_manhattan_2019')
-save_dir = "temp/bristol21/"
+save_dir = "temp/oxford21/"
 # csv_filename = os.path.join( os.environ['datasets'], 'streetlearn', 'jpegs_manhattan_2019', 'nodes.txt') # File with node metadata
-csv_filename = 'temp/bristol21.txt' # File with node metadata
+csv_filename = 'temp/oxford21.txt' # File with node metadata
 frame = pd.read_csv(csv_filename, names=["pano_id","yaw","lat","lon"])
 n = len(frame)
 print("Nodes to process in {} dataset: {}".format( csv_filename, n))
@@ -139,7 +139,7 @@ for zoom in zoom_levels:
 
 # Mapfile stylesheet. Parse it only once 
 # mapfile = os.path.join( os.environ['carto'], 'style_s2v_notxt_bheight_{}.xml'.format(city) )
-mapfile = os.path.join('/home/os17592/src/openstreetmap-carto/style_notxt_bristol.xml')
+mapfile = os.path.join('/home/os17592/src/openstreetmap-carto/style_notxt_oxford.xml')
 m = mapnik.Map(width, height) 
 mapnik.load_map(m, mapfile)
 
