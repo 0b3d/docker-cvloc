@@ -1,0 +1,19 @@
+version: "3"
+services:
+    postgis:
+        #image: geogra
+        build: ./postgis
+        ports: 
+            - "5432:5432"
+        volumes:
+            - ./data:/var/lib/postgresql/data
+        environment: 
+            - POSTGRES_PASSWD=postgres
+            - LOCALE=en_GB
+    tilemill: 
+        build: ./tilemill
+        ports:
+            - "20008:20008"
+            - "20009:20009"
+        volumes:
+            - .tilemill/styles:/styles
